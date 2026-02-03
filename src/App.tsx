@@ -19,9 +19,8 @@ function App() {
 
   const handleYes = () => {
     setIsAccepted(true);
-    const end = Date.now() + 3 * 1000;
+    const end = Date.now() + 4 * 1000;
 
-    // Confetti explosion loop
     const colors = ['#ff4d6d', '#ff8fa3', '#ffffff'];
     
     (function frame() {
@@ -47,10 +46,8 @@ function App() {
   };
 
   const moveNoButton = () => {
-    // Calcola una posizione casuale ma "sicura" all'interno della viewport visibile
-    // Ridotto il range per evitare che vada troppo fuori schermo su mobile
-    const x = (Math.random() - 0.5) * 200; // sposta +/- 100px orizzontalmente
-    const y = (Math.random() - 0.5) * 200; // sposta +/- 100px verticalmente
+    const x = (Math.random() - 0.5) * 200;
+    const y = (Math.random() - 0.5) * 200;
     setNoButtonPos({ x, y });
     setIsMoving(true);
   };
@@ -118,7 +115,7 @@ function App() {
                     animate={isMoving ? { x: noButtonPos.x, y: noButtonPos.y } : {}}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     onMouseEnter={moveNoButton}
-                    onTouchStart={moveNoButton} // Supporto touch
+                    onTouchStart={moveNoButton}
                   >
                     No 🙈
                   </motion.button>
@@ -134,15 +131,30 @@ function App() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8 }}
         >
-          <div className="glass-card success-card">
-            <h1>Evviva! 🥰</h1>
-            <p>Hai reso questa giornata magica.</p>
-            <p className="love-note">Ti amo tanto!</p>
+          <div className="glass-card success-card poem-card">
+            <h1 className="success-title">Per Te... 🥰</h1>
+            <div className="poem-content">
+              <p>Ti amo di un amore che non conosco</p>
+              <p>di un amore per cui non ho parole</p>
+              <p>né progetto.</p>
+              <p>Ti amo come si amano i tramonti</p>
+              <p>le albe e i vasti spazi</p>
+              <p>come si amano le risa dei bimbi</p>
+              <p>e i loro abbracci.</p>
+              <p>E amandoti sono tutta lacrime</p>
+              <p>sono tutta sorriso.</p>
+              <p>E la mia voce diventa coro</p>
+              <p>sono un torrente in piena</p>
+              <p>tutta cuore e mondo.</p>
+              <p>Amandoti mi faccio intera</p>
+              <p>riempio la crepa</p>
+              <p>e divento altro.</p>
+            </div>
+            <p className="love-note">Ti amo immensamente!</p>
           </div>
           
-          {/* Cuori fluttuanti sfondo */}
           <div className="floating-hearts-bg">
-            {Array.from({ length: 15 }).map((_, i) => (
+            {Array.from({ length: 20 }).map((_, i) => (
               <motion.div
                 key={i}
                 className="bg-heart"
