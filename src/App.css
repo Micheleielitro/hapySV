@@ -8,11 +8,11 @@
   --glass-border: rgba(255, 255, 255, 0.9);
   --glass-shadow: 0 8px 32px 0 rgba(164, 19, 60, 0.15);
   
-  /* Nuovi colori Luxury */
-  --env-dark: #590d22;  /* Interno scuro */
-  --env-main: #800f2f;  /* Rosso rubino principale */
-  --env-light: #a4133c; /* Rosso più chiaro per la patta */
-  --gold-accent: #ffb703; /* Oro */
+  /* Nuovi colori Minimal Elegant */
+  --env-main: #ffffff;      /* Bianco puro */
+  --env-shadow: #f1f3f5;    /* Bianco grigio per le pieghe */
+  --env-inside: #e9ecef;    /* Interno leggermente più scuro */
+  --seal-red: #d90429;      /* Rosso Cuore Intenso */
 }
 
 #root {
@@ -39,7 +39,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at center, #ffccd5, #fff0f3, #ffd6e0);
+  background: radial-gradient(circle at center, #ffe3e9, #fff0f3, #ffe3e9);
   animation: pulseBG 10s ease infinite alternate;
   z-index: -1;
 }
@@ -49,25 +49,25 @@
   100% { transform: scale(1.05); }
 }
 
-/* --- ENVELOPE STYLES (LUXURY VERSION) --- */
+/* --- ENVELOPE STYLES (MINIMAL CHIC WHITE) --- */
 .envelope-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.3)); /* Ombra profonda per tutta la busta */
+  filter: drop-shadow(0 15px 35px rgba(0,0,0,0.1)); /* Ombra morbida ed elegante */
 }
 
 .envelope {
   position: relative;
   width: 320px;
   height: 220px;
-  background: var(--env-dark); /* Colore scuro per l'interno visibile */
-  border-radius: 6px;
+  background: var(--env-inside);
+  border-radius: 4px;
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  overflow: hidden; /* Mantiene pulito */
+  overflow: hidden;
 }
 
 /* Tasca Inferiore */
@@ -79,10 +79,9 @@
   height: 0;
   border-left: 160px solid transparent;
   border-right: 160px solid transparent;
-  border-bottom: 140px solid var(--env-main); /* Rosso Rubino */
+  border-bottom: 140px solid var(--env-main); /* Bianco Puro */
   z-index: 2;
-  /* Effetto bordo dorato sottile tramite drop-shadow */
-  filter: drop-shadow(0 -1px 1px rgba(255, 215, 0, 0.3)); 
+  filter: drop-shadow(0 -2px 5px rgba(0,0,0,0.05)); /* Leggera ombra per stacco */
 }
 
 /* Patta Superiore */
@@ -94,67 +93,68 @@
   height: 0;
   border-left: 160px solid transparent;
   border-right: 160px solid transparent;
-  border-top: 140px solid var(--env-light); /* Rosso leggermente più chiaro e brillante */
+  border-top: 140px solid #f8f9fa; /* Bianco leggermente off-white per realismo */
   transform-origin: top;
   z-index: 3;
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  /* Ombra realistica sotto la patta */
-  filter: drop-shadow(0 2px 10px rgba(0,0,0,0.3)); 
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.08)); 
 }
 
 .envelope:hover .flap-top {
-  transform: rotateX(15deg); /* Si solleva leggermente al passaggio del mouse */
+  transform: rotateX(15deg);
 }
 
-/* Sigillo Luxury */
+/* Sigillo a Cuore Rosso */
 .seal {
   position: absolute;
-  top: 55%; /* Posizionato sulla punta della patta */
+  top: 55%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  width: 55px;
-  height: 55px;
-  
-  /* Gradiente Oro Realistico */
-  background: radial-gradient(ellipse at 30% 30%, #ffd700, #b8860b, #78350f);
-  
-  border-radius: 50%;
+  transform: translate(-50%, -50%) rotate(45deg); /* Ruotato per fare il cuore */
+  width: 30px;
+  height: 30px;
+  background: var(--seal-red);
   z-index: 4;
-  
-  /* Ombre multiple per effetto 3D sporgente */
-  box-shadow: 
-    0 4px 8px rgba(0,0,0,0.4), 
-    inset 2px 2px 4px rgba(255,255,255,0.4),
-    inset -2px -2px 4px rgba(0,0,0,0.2);
-    
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid rgba(255,215,0,0.5);
+  box-shadow: 2px 2px 6px rgba(0,0,0,0.2);
 }
 
+/* Creiamo la forma del cuore con i pseudo-elementi */
+.seal::before,
+.seal::after {
+  content: "";
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: var(--seal-red);
+  border-radius: 50%;
+}
+
+.seal::before {
+  top: -15px;
+  left: 0;
+}
+
+.seal::after {
+  left: -15px;
+  top: 0;
+}
+
+/* Nascondiamo la lettera B nel vecchio sigillo rotondo */
 .seal-text {
-  font-family: 'Dancing Script', cursive;
-  font-size: 28px;
-  color: #5c2805; /* Marrone scuro per l'incisone */
-  font-weight: bold;
-  text-shadow: 0 1px 1px rgba(255,255,255,0.2);
+  display: none; 
 }
 
 .instruction {
   margin-top: 45px;
-  color: var(--env-main);
+  color: #d90429; /* Rosso scuro coordinato al cuore */
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
   font-size: 0.85rem;
-  letter-spacing: 3px;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  background: rgba(255,255,255,0.6);
-  padding: 10px 24px;
+  background: rgba(255,255,255,0.8);
+  padding: 8px 20px;
   border-radius: 30px;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-  border: 1px solid rgba(255,255,255,0.8);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
 }
 
 /* --- BACKGROUND HEARTS --- */
@@ -182,7 +182,7 @@
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid white;
   border-radius: 24px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.1);
   padding: 35px 25px;
   width: 85%;
   max-width: 420px;
@@ -192,21 +192,16 @@
   z-index: 10;
 }
 
-/* Decorazione floreale/oro angoli card (Opzionale, pulito è meglio) */
-
 .title {
   font-family: 'Dancing Script', cursive;
   font-size: 3.2rem;
-  background: -webkit-linear-gradient(45deg, #a4133c, #ff4d6d);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #d90429;
   margin: 0;
   line-height: 1.2;
-  filter: drop-shadow(0 2px 2px rgba(0,0,0,0.05));
 }
 
 .subtitle {
-  color: #666;
+  color: #495057;
   font-size: 1rem;
   margin-top: 10px;
   font-weight: 500;
@@ -214,7 +209,7 @@
 
 .divider {
   font-size: 1.5rem;
-  color: #ffb703; /* Cuoricino Oro */
+  color: #d90429;
   margin: 15px 0;
 }
 
@@ -222,7 +217,7 @@
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
   font-size: 1.6rem;
-  color: #800f2f;
+  color: #212529;
   margin: 15px 0 35px 0;
 }
 
@@ -242,11 +237,10 @@
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(255, 77, 109, 0.3);
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
   font-family: 'Montserrat', sans-serif;
-  -webkit-tap-highlight-color: transparent;
   outline: none;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.2s;
 }
 
 .btn:active {
@@ -254,16 +248,15 @@
 }
 
 .yes-btn {
-  background: linear-gradient(135deg, #ff4d6d 0%, #a4133c 100%);
+  background: #d90429;
   color: white;
   z-index: 5;
-  border: 1px solid rgba(255,255,255,0.2);
 }
 
 .no-btn {
   background: white;
-  color: #a4133c;
-  border: 2px solid #a4133c;
+  color: #d90429;
+  border: 2px solid #d90429;
   position: relative;
   z-index: 4;
 }
@@ -287,21 +280,21 @@
 .success-title {
   font-family: 'Dancing Script', cursive;
   font-size: 2.8rem !important;
-  color: var(--accent-color);
+  color: #d90429;
   margin-bottom: 15px;
 }
 
 .poem-content {
   font-size: 0.95rem;
   line-height: 1.6;
-  color: #4a4a4a; /* Grigio scuro elegante */
+  color: #343a40;
   font-style: italic;
 }
 
 .love-note {
   font-size: 1.2rem;
   margin-top: 20px;
-  color: var(--accent-color);
+  color: #d90429;
   font-weight: bold;
   letter-spacing: 1px;
 }
