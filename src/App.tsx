@@ -7,8 +7,6 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [isAccepted, setIsAccepted] = useState(false);
   const [noButtonPos, setNoButtonPos] = useState({ x: 0, y: 0 });
-  
-  // Riferimento per calcolare i limiti del movimento
   const cardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -35,15 +33,9 @@ function App() {
   };
 
   const moveNoButton = () => {
-    // Logica Mobile-Safe: Movimento limitato
-    // Su mobile spostiamo di max 60px, su desktop un po' di più
     const limit = window.innerWidth < 480 ? 60 : 100;
-    
-    // Genera una nuova posizione randomica MA limitata rispetto al centro originale
-    // Usiamo valori positivi e negativi per andare in tutte le direzioni
     const newX = (Math.random() - 0.5) * (limit * 2);
     const newY = (Math.random() - 0.5) * (limit * 2);
-
     setNoButtonPos({ x: newX, y: newY });
   };
 
@@ -51,34 +43,42 @@ function App() {
     <div className="container">
       <div className="background-gradient"></div>
       
-      {/* CUORI SFONDO: Ora rossi/rosa scuro per contrastare con lo sfondo chiaro */}
+      {/* CUORI SFONDO: Più numerosi, più veloci e con movimento oscillante */}
       <div className="floating-hearts-bg">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="bg-heart"
-            style={{
-              left: `${Math.random() * 100}%`,
-              fontSize: `${Math.random() * 20 + 15}px`,
-              // Colore rosa scuro invece di bianco
-              color: `rgba(255, 77, 109, ${Math.random() * 0.3 + 0.1})` 
-            }}
-            initial={{ y: "110vh", opacity: 0 }}
-            animate={{ 
-              y: "-10vh", 
-              opacity: [0, 0.8, 0], // Più visibili
-              rotate: Math.random() * 360
-            }}
-            transition={{ 
-              duration: Math.random() * 10 + 15, 
-              repeat: Infinity,
-              delay: Math.random() * 10,
-              ease: "linear"
-            }}
-          >
-            ❤
-          </motion.div>
-        ))}
+        {Array.from({ length: 45 }).map((_, i) => {
+          const size = Math.random() * 20 + 10;
+          const duration = Math.random() * 4 + 4; // Più veloci: tra 4 e 8 secondi
+          const delay = Math.random() * 10;
+          const startX = Math.random() * 100;
+          
+          return (
+            <motion.div
+              key={i}
+              className="bg-heart"
+              style={{
+                left: `${startX}%`,
+                fontSize: `${size}px`,
+                color: `rgba(255, 77, 109, ${Math.random() * 0.4 + 0.2})`, // Più opachi
+                zIndex: 0
+              }}
+              initial={{ y: "110vh", x: 0, opacity: 0 }}
+              animate={{ 
+                y: "-10vh", 
+                x: [0, 25, -25, 0], // Movimento a zig-zag (oscillazione)
+                opacity: [0, 1, 1, 0],
+                rotate: [0, 45, -45, 0]
+              }}
+              transition={{ 
+                duration: duration, 
+                repeat: Infinity,
+                delay: delay,
+                ease: "linear"
+              }}
+            >
+              ❤
+            </motion.div>
+          );
+        })}
       </div>
 
       {!isAccepted ? (
@@ -101,8 +101,8 @@ function App() {
               </div>
               <motion.p 
                 className="instruction"
-                animate={{ opacity: [0.6, 1, 0.6] }}
-                transition={{ repeat: Infinity, duration: 2 }}
+                animate={{ opacity: [0.6, 1, 0.6], scale: [1, 1.05, 1] }}
+                transition={{ repeat: Infinity, duration: 1.5 }}
               >
                 Tocca per aprire...
               </motion.p>
@@ -132,12 +132,10 @@ function App() {
                   
                   <motion.button 
                     className="btn no-btn"
-                    // Muove il bottone usando transform translate
                     animate={{ x: noButtonPos.x, y: noButtonPos.y }}
-                    transition={{ type: "spring", stiffness: 500, damping: 15 }} // Molto scattante
+                    transition={{ type: "spring", stiffness: 500, damping: 15 }}
                     onMouseEnter={moveNoButton}
                     onTouchStart={(e) => {
-                      // Su mobile, previeni il click se sta scappando
                       e.preventDefault(); 
                       moveNoButton();
                     }} 
