@@ -56,6 +56,35 @@ function App() {
     <div className="container">
       <div className="background-gradient"></div>
       
+      {/* Cuori fluttuanti sempre visibili come sfondo */}
+      <div className="floating-hearts-bg">
+        {Array.from({ length: 15 }).map((_, i) => (
+          <motion.div
+            key={i}
+            className="bg-heart"
+            style={{
+              left: `${Math.random() * 100}%`,
+              fontSize: `${Math.random() * 20 + 15}px`,
+              filter: 'blur(1px)'
+            }}
+            initial={{ y: "110vh", opacity: 0 }}
+            animate={{ 
+              y: "-10vh", 
+              opacity: [0, 0.4, 0],
+              rotate: Math.random() * 360
+            }}
+            transition={{ 
+              duration: Math.random() * 10 + 15, 
+              repeat: Infinity,
+              delay: Math.random() * 10,
+              ease: "linear"
+            }}
+          >
+            ❤
+          </motion.div>
+        ))}
+      </div>
+
       {!isAccepted ? (
         <AnimatePresence mode="wait">
           {!isOpen ? (
@@ -71,12 +100,7 @@ function App() {
                 <div className="flap-top"></div>
                 <div className="pocket"></div>
                 <div className="seal">
-                  <motion.span 
-                    animate={{ scale: [1, 1.1, 1] }} 
-                    transition={{ repeat: Infinity, duration: 1.5 }}
-                  >
-                    ❤
-                  </motion.span>
+                  <span className="seal-text">B</span>
                 </div>
               </div>
               <motion.p 
@@ -151,29 +175,6 @@ function App() {
               <p>e divento altro.</p>
             </div>
             <p className="love-note">Ti amo immensamente!</p>
-          </div>
-          
-          <div className="floating-hearts-bg">
-            {Array.from({ length: 20 }).map((_, i) => (
-              <motion.div
-                key={i}
-                className="bg-heart"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  fontSize: `${Math.random() * 20 + 10}px`
-                }}
-                initial={{ y: "110vh", opacity: 0 }}
-                animate={{ y: "-10vh", opacity: [0, 1, 0] }}
-                transition={{ 
-                  duration: Math.random() * 5 + 5, 
-                  repeat: Infinity,
-                  delay: Math.random() * 5,
-                  ease: "linear"
-                }}
-              >
-                ❤
-              </motion.div>
-            ))}
           </div>
         </motion.div>
       )}

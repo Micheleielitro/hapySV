@@ -7,6 +7,7 @@
   --glass-bg: rgba(255, 255, 255, 0.7);
   --glass-border: rgba(255, 255, 255, 0.8);
   --glass-shadow: 0 8px 32px 0 rgba(255, 77, 109, 0.15);
+  --gold: #e5c07b;
 }
 
 #root {
@@ -55,14 +56,16 @@
 
 .envelope {
   position: relative;
-  width: 300px;
-  height: 200px;
+  width: 320px;
+  height: 220px;
   background: #ff758f;
-  border-radius: 0 0 10px 10px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  border-radius: 5px; /* Angoli leggermente meno arrotondati per realismo */
+  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  /* Texture carta leggera */
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
 }
 
 .pocket {
@@ -71,11 +74,12 @@
   left: 0;
   width: 0;
   height: 0;
-  border-left: 150px solid transparent;
-  border-right: 150px solid transparent;
-  border-bottom: 110px solid #ff4d6d; /* Colore più scuro per la tasca frontale */
-  border-radius: 0 0 10px 10px;
+  border-left: 160px solid transparent;
+  border-right: 160px solid transparent;
+  border-bottom: 130px solid #ff4d6d;
+  border-radius: 0 0 5px 5px;
   z-index: 2;
+  filter: drop-shadow(0 -5px 5px rgba(0,0,0,0.05));
 }
 
 .flap-top {
@@ -84,13 +88,13 @@
   left: 0;
   width: 0;
   height: 0;
-  border-left: 150px solid transparent;
-  border-right: 150px solid transparent;
-  border-top: 110px solid #ff8fa3; /* Colore leggermente diverso per la patta */
+  border-left: 160px solid transparent;
+  border-right: 160px solid transparent;
+  border-top: 130px solid #ff8fa3;
   transform-origin: top;
   z-index: 3;
   transition: transform 0.4s ease;
-  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1));
+  filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
 }
 
 .envelope:hover .flap-top {
@@ -99,29 +103,66 @@
 
 .seal {
   position: absolute;
-  top: 45%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  background: radial-gradient(circle at 30% 30%, #ffd700, #b8860b);
+  border-radius: 50%;
   z-index: 4;
-  font-size: 50px;
-  color: #a4133c;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 0 2px 5px rgba(255,255,255,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #e5c07b;
+}
+
+.seal-text {
+  font-family: 'Dancing Script', cursive;
+  font-size: 28px;
+  color: #78350f;
+  font-weight: bold;
 }
 
 .instruction {
-  margin-top: 30px;
+  margin-top: 40px;
   color: #fff;
   font-weight: 600;
-  letter-spacing: 1px;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  font-size: 1.1rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  background: rgba(255,255,255,0.2);
+  padding: 8px 20px;
+  border-radius: 20px;
+  backdrop-filter: blur(5px);
+}
+
+/* --- BACKGROUND HEARTS --- */
+.floating-hearts-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bg-heart {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.6);
+  z-index: 0;
+  pointer-events: none;
 }
 
 /* --- GLASS CARD STYLES --- */
 .glass-card {
   background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border);
   border-radius: 24px;
   box-shadow: var(--glass-shadow);
@@ -131,9 +172,10 @@
   text-align: center;
   position: relative;
   overflow: hidden;
+  z-index: 10; /* Assicura che stia sopra i cuori di sfondo */
 }
 
-/* Effetto riflesso vetro */
+/* Resto delle classi precedenti rimangono invariate ma le riscrivo per completezza */
 .glass-card::before {
   content: '';
   position: absolute;
@@ -145,12 +187,6 @@
   transform: skewX(-25deg);
   animation: shine 6s infinite;
   pointer-events: none;
-}
-
-@keyframes shine {
-  0% { left: -100%; }
-  20% { left: 200%; }
-  100% { left: 200%; }
 }
 
 .title {
@@ -188,8 +224,8 @@
   display: flex;
   justify-content: center;
   gap: 20px;
-  min-height: 60px; /* Spazio riservato per evitare salti */
-  position: relative; /* Importante per il posizionamento assoluto del bottone No */
+  min-height: 60px;
+  position: relative;
 }
 
 .btn {
@@ -207,7 +243,7 @@
 .yes-btn {
   background: linear-gradient(45deg, #ff4d6d, #ff758f);
   color: white;
-  z-index: 10; /* Assicura che sia sempre cliccabile */
+  z-index: 10;
 }
 
 .no-btn {
@@ -223,6 +259,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
+  z-index: 10;
 }
 
 .success-card {
@@ -262,26 +299,21 @@
   padding-top: 15px;
 }
 
-.bg-heart {
-  position: absolute;
-  color: rgba(255, 255, 255, 0.4);
-  z-index: 0;
-  pointer-events: none;
-}
-
 /* Responsive adjustments */
 @media (max-width: 480px) {
   .envelope {
-    width: 260px;
-    height: 180px;
+    width: 280px;
+    height: 190px;
   }
   .pocket {
-    border-left-width: 130px;
-    border-right-width: 130px;
+    border-left-width: 140px;
+    border-right-width: 140px;
+    border-bottom-width: 110px;
   }
   .flap-top {
-    border-left-width: 130px;
-    border-right-width: 130px;
+    border-left-width: 140px;
+    border-right-width: 140px;
+    border-top-width: 110px;
   }
   .glass-card {
     padding: 30px 20px;
