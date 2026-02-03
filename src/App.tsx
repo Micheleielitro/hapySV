@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import './App.css';
@@ -7,9 +7,10 @@ function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [isAccepted, setIsAccepted] = useState(false);
   const [noButtonPos, setNoButtonPos] = useState({ x: 0, y: 0 });
-  const [isMoving, setIsMoving] = useState(false);
+  
+  // Riferimento per calcolare i limiti del movimento
+  const cardRef = useRef<HTMLDivElement>(null);
 
-  // Preload Google Fonts
   useEffect(() => {
     const link = document.createElement('link');
     link.href = 'https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600&display=swap';
@@ -20,57 +21,52 @@ function App() {
   const handleYes = () => {
     setIsAccepted(true);
     const end = Date.now() + 4 * 1000;
-
     const colors = ['#ff4d6d', '#ff8fa3', '#ffffff'];
     
     (function frame() {
       confetti({
-        particleCount: 5,
-        angle: 60,
-        spread: 55,
-        origin: { x: 0 },
-        colors: colors
+        particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: colors
       });
       confetti({
-        particleCount: 5,
-        angle: 120,
-        spread: 55,
-        origin: { x: 1 },
-        colors: colors
+        particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: colors
       });
-
-      if (Date.now() < end) {
-        requestAnimationFrame(frame);
-      }
+      if (Date.now() < end) requestAnimationFrame(frame);
     }());
   };
 
   const moveNoButton = () => {
-    const x = (Math.random() - 0.5) * 200;
-    const y = (Math.random() - 0.5) * 200;
-    setNoButtonPos({ x, y });
-    setIsMoving(true);
+    // Logica Mobile-Safe: Movimento limitato
+    // Su mobile spostiamo di max 60px, su desktop un po' di più
+    const limit = window.innerWidth < 480 ? 60 : 100;
+    
+    // Genera una nuova posizione randomica MA limitata rispetto al centro originale
+    // Usiamo valori positivi e negativi per andare in tutte le direzioni
+    const newX = (Math.random() - 0.5) * (limit * 2);
+    const newY = (Math.random() - 0.5) * (limit * 2);
+
+    setNoButtonPos({ x: newX, y: newY });
   };
 
   return (
     <div className="container">
       <div className="background-gradient"></div>
       
-      {/* Cuori fluttuanti sempre visibili come sfondo */}
+      {/* CUORI SFONDO: Ora rossi/rosa scuro per contrastare con lo sfondo chiaro */}
       <div className="floating-hearts-bg">
-        {Array.from({ length: 15 }).map((_, i) => (
+        {Array.from({ length: 20 }).map((_, i) => (
           <motion.div
             key={i}
             className="bg-heart"
             style={{
               left: `${Math.random() * 100}%`,
               fontSize: `${Math.random() * 20 + 15}px`,
-              filter: 'blur(1px)'
+              // Colore rosa scuro invece di bianco
+              color: `rgba(255, 77, 109, ${Math.random() * 0.3 + 0.1})` 
             }}
             initial={{ y: "110vh", opacity: 0 }}
             animate={{ 
               y: "-10vh", 
-              opacity: [0, 0.4, 0],
+              opacity: [0, 0.8, 0], // Più visibili
               rotate: Math.random() * 360
             }}
             transition={{ 
@@ -90,9 +86,9 @@ function App() {
           {!isOpen ? (
             <motion.div 
               className="envelope-container"
-              initial={{ scale: 0, rotate: -10 }}
-              animate={{ scale: 1, rotate: 0 }}
-              exit={{ scale: 1.5, opacity: 0 }}
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              exit={{ scale: 1.2, opacity: 0 }}
               transition={{ type: "spring", stiffness: 100, damping: 20 }}
               onClick={() => setIsOpen(true)}
             >
@@ -105,7 +101,7 @@ function App() {
               </div>
               <motion.p 
                 className="instruction"
-                animate={{ opacity: [0.5, 1, 0.5] }}
+                animate={{ opacity: [0.6, 1, 0.6] }}
                 transition={{ repeat: Infinity, duration: 2 }}
               >
                 Tocca per aprire...
@@ -114,13 +110,14 @@ function App() {
           ) : (
             <motion.div 
               className="glass-card"
-              initial={{ scale: 0.8, opacity: 0, y: 50 }}
+              ref={cardRef}
+              initial={{ scale: 0.9, opacity: 0, y: 30 }}
               animate={{ scale: 1, opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
+              transition={{ duration: 0.5 }}
             >
               <div className="card-content">
                 <h1 className="title">Ciao Amore! ✨</h1>
-                <p className="subtitle">Ho una domanda molto importante per te...</p>
+                <p className="subtitle">Ho una domanda importante...</p>
                 <div className="divider">♥</div>
                 <p className="big-question">Vuoi essere il mio<br/>San Valentino?</p>
                 
@@ -128,18 +125,22 @@ function App() {
                   <motion.button 
                     className="btn yes-btn" 
                     onClick={handleYes}
-                    whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    Sì, lo voglio! 💖
+                    Sì! 💖
                   </motion.button>
                   
                   <motion.button 
                     className="btn no-btn"
-                    animate={isMoving ? { x: noButtonPos.x, y: noButtonPos.y } : {}}
-                    transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                    // Muove il bottone usando transform translate
+                    animate={{ x: noButtonPos.x, y: noButtonPos.y }}
+                    transition={{ type: "spring", stiffness: 500, damping: 15 }} // Molto scattante
                     onMouseEnter={moveNoButton}
-                    onTouchStart={moveNoButton}
+                    onTouchStart={(e) => {
+                      // Su mobile, previeni il click se sta scappando
+                      e.preventDefault(); 
+                      moveNoButton();
+                    }} 
                   >
                     No 🙈
                   </motion.button>
@@ -151,9 +152,9 @@ function App() {
       ) : (
         <motion.div 
           className="success-wrapper"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
         >
           <div className="glass-card success-card poem-card">
             <h1 className="success-title">Per Te... 🥰</h1>

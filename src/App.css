@@ -1,13 +1,13 @@
 :root {
   --primary-color: #ff4d6d;
   --secondary-color: #ff8fa3;
-  --accent-color: #c9184a;
+  --accent-color: #a4133c;
   --text-color: #590d22;
   --bg-gradient: linear-gradient(135deg, #fff0f3 0%, #ffccd5 100%);
-  --glass-bg: rgba(255, 255, 255, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.8);
-  --glass-shadow: 0 8px 32px 0 rgba(255, 77, 109, 0.15);
-  --gold: #e5c07b;
+  --glass-bg: rgba(255, 255, 255, 0.85); /* Più opaco per leggibilità */
+  --glass-border: rgba(255, 255, 255, 0.9);
+  --glass-shadow: 0 8px 32px 0 rgba(164, 19, 60, 0.1);
+  --gold: #ffc300;
 }
 
 #root {
@@ -34,7 +34,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #ffd1ff, #fbc2eb);
+  background: linear-gradient(-45deg, #ffe5ec, #ffc2d1, #fff0f3, #ffe5ec);
   background-size: 400% 400%;
   animation: gradientBG 15s ease infinite;
   z-index: -1;
@@ -56,16 +56,14 @@
 
 .envelope {
   position: relative;
-  width: 320px;
-  height: 220px;
+  width: 300px;
+  height: 200px;
   background: #ff758f;
-  border-radius: 5px; /* Angoli leggermente meno arrotondati per realismo */
-  box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+  border-radius: 4px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
   display: flex;
   justify-content: center;
   align-items: flex-end;
-  /* Texture carta leggera */
-  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
 }
 
 .pocket {
@@ -74,12 +72,11 @@
   left: 0;
   width: 0;
   height: 0;
-  border-left: 160px solid transparent;
-  border-right: 160px solid transparent;
-  border-bottom: 130px solid #ff4d6d;
-  border-radius: 0 0 5px 5px;
+  border-left: 150px solid transparent;
+  border-right: 150px solid transparent;
+  border-bottom: 120px solid #ff4d6d;
+  border-radius: 0 0 4px 4px;
   z-index: 2;
-  filter: drop-shadow(0 -5px 5px rgba(0,0,0,0.05));
 }
 
 .flap-top {
@@ -88,13 +85,13 @@
   left: 0;
   width: 0;
   height: 0;
-  border-left: 160px solid transparent;
-  border-right: 160px solid transparent;
-  border-top: 130px solid #ff8fa3;
+  border-left: 150px solid transparent;
+  border-right: 150px solid transparent;
+  border-top: 120px solid #ff8fa3;
   transform-origin: top;
   z-index: 3;
   transition: transform 0.4s ease;
-  filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.1));
 }
 
 .envelope:hover .flap-top {
@@ -106,37 +103,35 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 50px;
-  height: 50px;
-  background: radial-gradient(circle at 30% 30%, #ffd700, #b8860b);
+  width: 45px;
+  height: 45px;
+  background: radial-gradient(circle at 30% 30%, #ffd60a, #ccff33);
+  background-color: #ffb703;
+  border: 2px solid #fb8500;
   border-radius: 50%;
   z-index: 4;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3), inset 0 2px 5px rgba(255,255,255,0.4);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.2);
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 2px solid #e5c07b;
 }
 
 .seal-text {
   font-family: 'Dancing Script', cursive;
-  font-size: 28px;
+  font-size: 24px;
   color: #78350f;
   font-weight: bold;
 }
 
 .instruction {
-  margin-top: 40px;
-  color: #fff;
-  font-weight: 600;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+  margin-top: 35px;
+  color: #c9184a; /* Colore più scuro per leggibilità su sfondo chiaro */
+  font-weight: 700;
+  letter-spacing: 1px;
   font-size: 0.9rem;
-  text-shadow: 0 2px 10px rgba(0,0,0,0.2);
-  background: rgba(255,255,255,0.2);
-  padding: 8px 20px;
+  background: rgba(255,255,255,0.4);
+  padding: 8px 16px;
   border-radius: 20px;
-  backdrop-filter: blur(5px);
 }
 
 /* --- BACKGROUND HEARTS --- */
@@ -153,7 +148,7 @@
 
 .bg-heart {
   position: absolute;
-  color: rgba(255, 255, 255, 0.6);
+  /* Colore definito inline in React per randomizzazione */
   z-index: 0;
   pointer-events: none;
 }
@@ -161,95 +156,85 @@
 /* --- GLASS CARD STYLES --- */
 .glass-card {
   background: var(--glass-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid var(--glass-border);
-  border-radius: 24px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid white;
+  border-radius: 20px;
   box-shadow: var(--glass-shadow);
-  padding: 40px;
-  width: 90%;
-  max-width: 450px;
+  padding: 30px 20px; /* Padding ridotto per mobile */
+  width: 85%; /* Larghezza adatta a mobile */
+  max-width: 400px;
   text-align: center;
   position: relative;
   overflow: hidden;
-  z-index: 10; /* Assicura che stia sopra i cuori di sfondo */
-}
-
-/* Resto delle classi precedenti rimangono invariate ma le riscrivo per completezza */
-.glass-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -50%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(to right, transparent, rgba(255,255,255,0.4), transparent);
-  transform: skewX(-25deg);
-  animation: shine 6s infinite;
-  pointer-events: none;
+  z-index: 10;
 }
 
 .title {
   font-family: 'Dancing Script', cursive;
-  font-size: 3.5rem;
+  font-size: 3rem;
   color: var(--accent-color);
   margin: 0;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+  line-height: 1.2;
 }
 
 .subtitle {
   color: var(--text-color);
-  font-size: 1.1rem;
+  font-size: 1rem;
   margin-top: 10px;
-  opacity: 0.9;
 }
 
 .divider {
   font-size: 1.5rem;
   color: var(--primary-color);
-  margin: 15px 0;
-  opacity: 0.6;
+  margin: 10px 0;
+  opacity: 0.5;
 }
 
 .big-question {
   font-family: 'Montserrat', sans-serif;
   font-weight: 700;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   color: #800f2f;
-  line-height: 1.3;
-  margin: 20px 0 40px 0;
+  margin: 15px 0 30px 0;
 }
 
 .action-buttons {
   display: flex;
   justify-content: center;
-  gap: 20px;
+  align-items: center;
+  gap: 15px;
   min-height: 60px;
   position: relative;
+  /* Importante: non nascondere overflow qui, ma i bottoni stanno dentro la card */
 }
 
 .btn {
-  padding: 12px 32px;
+  padding: 12px 28px;
   border-radius: 50px;
   border: none;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
   font-family: 'Montserrat', sans-serif;
+  -webkit-tap-highlight-color: transparent; /* Rimuove highlight blu su mobile */
   outline: none;
+  user-select: none;
 }
 
 .yes-btn {
   background: linear-gradient(45deg, #ff4d6d, #ff758f);
   color: white;
-  z-index: 10;
+  z-index: 5;
 }
 
 .no-btn {
   background: white;
   color: #ff4d6d;
   border: 2px solid #ff4d6d;
+  position: relative; /* Necessario per il transform translate */
+  z-index: 4;
 }
 
 /* --- SUCCESS SCREEN --- */
@@ -263,70 +248,38 @@
 }
 
 .success-card {
-  max-width: 500px;
-  width: 95%;
-  max-height: 90vh;
+  max-height: 85vh; /* Altezza massima per mobile */
   overflow-y: auto;
-  padding: 30px;
+  padding: 25px;
 }
 
 .success-title {
   font-family: 'Dancing Script', cursive;
-  font-size: 3rem !important;
+  font-size: 2.5rem !important;
   color: var(--accent-color);
-  margin-bottom: 20px;
+  margin-bottom: 15px;
 }
 
 .poem-content {
-  text-align: center;
-  line-height: 1.6;
-  font-style: italic;
+  font-size: 0.95rem; /* Font leggermente più piccolo per far stare tutto */
+  line-height: 1.5;
   color: var(--text-color);
-  margin-bottom: 20px;
-  font-size: 1.05rem;
-}
-
-.poem-content p {
-  margin: 5px 0;
 }
 
 .love-note {
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: #ff4d6d;
+  font-size: 1.2rem;
   margin-top: 15px;
-  border-top: 1px solid rgba(255, 77, 109, 0.2);
-  padding-top: 15px;
+  color: var(--primary-color);
+  font-weight: bold;
 }
 
-/* Responsive adjustments */
-@media (max-width: 480px) {
-  .envelope {
-    width: 280px;
-    height: 190px;
-  }
-  .pocket {
-    border-left-width: 140px;
-    border-right-width: 140px;
-    border-bottom-width: 110px;
-  }
-  .flap-top {
-    border-left-width: 140px;
-    border-right-width: 140px;
-    border-top-width: 110px;
-  }
-  .glass-card {
-    padding: 30px 20px;
-    width: 85%;
-  }
-  .title {
-    font-size: 2.8rem;
-  }
-  .big-question {
-    font-size: 1.5rem;
-  }
-  .btn {
-    padding: 10px 24px;
-    font-size: 1rem;
-  }
+/* Responsive adjustments specifici per schermi piccoli */
+@media (max-width: 380px) {
+  .envelope { width: 260px; height: 170px; }
+  .pocket { border-left-width: 130px; border-right-width: 130px; border-bottom-width: 100px; }
+  .flap-top { border-left-width: 130px; border-right-width: 130px; border-top-width: 100px; }
+  
+  .title { font-size: 2.5rem; }
+  .big-question { font-size: 1.4rem; }
+  .btn { padding: 10px 20px; font-size: 0.9rem; }
 }
