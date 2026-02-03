@@ -4,13 +4,12 @@ import confetti from 'canvas-confetti';
 import './App.css';
 
 function App() {
-  const [stage, setStage] = useState<'envelope' | 'zooming' | 'reading' | 'success'>('envelope');
+  const [stage, setStage] = useState<'envelope' | 'reading' | 'success'>('envelope');
   const [noButtonPos, setNoButtonPos] = useState({ x: 0, y: 0 });
   const [typedText, setTypedText] = useState("");
   const fullQuestion = "Vuoi essere il mio\nSan Valentino?";
 
   useEffect(() => {
-    // Caricamento Font
     const link = document.createElement('link');
     link.href = 'https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Montserrat:wght@400;600;700&display=swap';
     link.rel = 'stylesheet';
@@ -21,27 +20,25 @@ function App() {
   useEffect(() => {
     if (stage === 'reading') {
       let i = 0;
+      setTypedText(""); // Reset testo
       const interval = setInterval(() => {
         setTypedText(fullQuestion.slice(0, i + 1));
         i++;
         if (i === fullQuestion.length) clearInterval(interval);
-      }, 100); // Velocità scrittura
+      }, 100);
       return () => clearInterval(interval);
     }
   }, [stage]);
 
   const handleOpen = () => {
-    setStage('zooming');
-    // Aspetta che finisca lo zoom per mostrare la lettera
-    setTimeout(() => {
-      setStage('reading');
-    }, 800);
+    // Passaggio diretto alla lettura senza fase intermedia "zooming" vuota
+    setStage('reading');
   };
 
   const handleYes = () => {
     setStage('success');
     const end = Date.now() + 4 * 1000;
-    const colors = ['#d90429', '#ef233c', '#ffffff']; // Rossi e Bianchi
+    const colors = ['#d90429', '#ef233c', '#ffffff'];
     
     (function frame() {
       confetti({
@@ -65,7 +62,6 @@ function App() {
     <div className="container">
       <div className="background-gradient"></div>
       
-      {/* CUORI SFONDO (Più delicati) */}
       <div className="floating-hearts-bg">
         {Array.from({ length: 30 }).map((_, i) => (
           <motion.div
@@ -96,14 +92,19 @@ function App() {
 
       <AnimatePresence mode="wait">
         
-        {/* FASE 1: BUSTA CHIUSA */}
+        {/* FASE 1: BUSTA */}
         {stage === 'envelope' && (
           <motion.div 
             className="envelope-container"
+            key="envelope"
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 10, opacity: 0 }} // ZOOM IN ENORME
-            transition={{ duration: 0.8, ease: "easeInOut" }}
+            exit={{
+              scale: 1.5, // Si ingrandisce solo un po'
+              opacity: 0, // Svanisce
+              y: 100 // Scivola in basso
+            }} 
+            transition={{ duration: 0.6, ease: "easeInOut" }}
             onClick={handleOpen}
           >
             <div className="envelope">
@@ -121,22 +122,19 @@ function App() {
           </motion.div>
         )}
 
-        {/* FASE 2: FASE DI ZOOM (Transizione vuota gestita dal CSS exit sopra) */}
-        {stage === 'zooming' && null}
-
-        {/* FASE 3: LETTURA LETTERA */}
+        {/* FASE 2: LETTURA LETTERA */}
         {stage === 'reading' && (
           <motion.div 
             className="paper-card"
-            initial={{ y: 50, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.8 }}
+            key="letter"
+            initial={{ scale: 0.8, opacity: 0, y: 50 }} // Parte leggermente più piccola e in basso
+            animate={{ scale: 1, opacity: 1, y: 0 }} // Arriva al centro in dimensione naturale
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }} // Ritardo leggero per sovrapporsi all'uscita della busta
           >
             <h1 className="title">Ciao Amore,</h1>
             <p className="subtitle">Ho una domanda speciale per te...</p>
             <div className="divider"></div>
             
-            {/* Testo animato che si scrive */}
             <div className="typewriter-text">
               {typedText}
               <motion.span 
@@ -169,10 +167,11 @@ function App() {
           </motion.div>
         )}
 
-        {/* FASE 4: SUCCESSO (POESIA) */}
+        {/* FASE 3: SUCCESSO */}
         {stage === 'success' && (
           <motion.div 
             className="paper-card poem-card"
+            key="poem"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
